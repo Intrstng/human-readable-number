@@ -43,44 +43,30 @@ function findDigit (obj, digit) {
 })[1];
 }
 
-function findTens (obj, digit) {
-  return Object.entries(obj).find((elem) => {
-  const [num, textValue] = elem;
-  if (digit === +num) return elem;
-});
-}
-
 function findFromTwentyTillNinetyNine (number) {
   if (number % 10 === 0) {
     tensQty = number / 10;
-
-    return findTens(tensObj, tensQty)[1];
-}
+    return findDigit(tensObj, tensQty);
+};
     if (number % 10 !== 0) {
       tensQty = Math.trunc(number / 10);
-
-      return `${findTens(tensObj, tensQty)[1]} ${findDigit(numsObj, number % 10)}`;
+      return `${findDigit(tensObj, tensQty)} ${findDigit(numsObj, number % 10)}`;
+};
 }
-}
 
-if (number >= 0 && number <= 19) return (findDigit(numsObj, number));
-
-if (number > 19 && number < 100) {
-  
-  return findFromTwentyTillNinetyNine (number);
-}
+if (number >= 0 && number <= 19) return findDigit(numsObj, number);
+if (number > 19 && number < 100) return findFromTwentyTillNinetyNine (number);
 
 if (number > 99) {
-  hundredQty = Math.trunc(number / 100);
+ hundredQty = Math.trunc(number / 100);
+ hundreds = `${findDigit(numsObj, hundredQty)} hundred`;
 
- let hundreds = `${findDigit(numsObj, hundredQty)} hundred`;
-
-if ( number % 100 === 0) return `${hundreds}`;
-else {
-  if (number % 100 > 0 && number % 100 <= 19) {
-    return `${hundreds} ${(findDigit(numsObj, number % 100))}`
-  }
-  else return `${hundreds} ${findFromTwentyTillNinetyNine (number % 100)}`
-}
-}
+  if ( number % 100 === 0) return `${hundreds}`;
+  else {
+    if (number % 100 > 0 && number % 100 <= 19) {
+      return `${hundreds} ${(findDigit(numsObj, number % 100))}`;
+    }
+    else return `${hundreds} ${findFromTwentyTillNinetyNine (number % 100)}`;
+};
+};
 }
